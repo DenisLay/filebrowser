@@ -1,7 +1,7 @@
 ﻿<Window x:Class="filebrowser.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="File Browser" Height="500" Width="930" Loaded="Window1_Loaded" Margin="0,0,50,0">
+        Title="File Browser" Height="500" Width="930" Loaded="Window1_Loaded" Margin="0,0,50,0" ResizeMode="NoResize">
     
     <Grid>
         

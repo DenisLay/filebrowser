@@ -9,26 +9,37 @@ using System.Windows.Input;
 
 namespace filebrowser
 {
+
+    public enum EntryType
+    {
+        Dir,
+        File
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
+        ObservableCollection<DirectoryEntry> entries = new ObservableCollection<DirectoryEntry>();
+        ObservableCollection<DirectoryEntry> subEntries = new ObservableCollection<DirectoryEntry>();
+        ObservableCollection<DirectoryEntry> subEntries2 = new ObservableCollection<DirectoryEntry>();
+        Recources res = new Recources();
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        ObservableCollection<DirectoryEntry> entries = new ObservableCollection<DirectoryEntry>();
-        ObservableCollection<DirectoryEntry> subEntries = new ObservableCollection<DirectoryEntry>();
-        ObservableCollection<DirectoryEntry> subEntries2 = new ObservableCollection<DirectoryEntry>();
 
         void Window1_Loaded(object sender, RoutedEventArgs e)
         {
             foreach (string s in Directory.GetLogicalDrives())
             {
-                DirectoryEntry d = new DirectoryEntry(s, s, "<Driver>", "<DIR>", Directory.GetLastWriteTime(s), "C:/Users/Robert/Documents/dotnet/filebrowser/images/hdd.ico", EntryType.Dir);
-                entries.Add(d);
+                DirectoryEntry dir = new DirectoryEntry(s, s, "<Driver>", "<DIR>", Directory.GetLastWriteTime(s), res.Hdd, EntryType.Dir);
+                entries.Add(dir);
             }
             this.listView1.ItemsSource = entries;
             this.listView2.ItemsSource = entries;
@@ -56,7 +67,7 @@ namespace filebrowser
 
                         foreach (string s in Directory.GetLogicalDrives())
                         {
-                            DirectoryEntry d = new DirectoryEntry(s, s, "<Driver>", "<DIR>", Directory.GetLastWriteTime(s), "C:/Users/Robert/Documents/dotnet/filebrowser/images/hdd.ico", EntryType.Dir);
+                            DirectoryEntry d = new DirectoryEntry(s, s, "<Driver>", "<DIR>", Directory.GetLastWriteTime(s), res.Hdd, EntryType.Dir);
                             subEntries.Add(d);
                         }
                     }
@@ -64,13 +75,13 @@ namespace filebrowser
                     {
                         subEntries.Clear();
 
-                        DirectoryEntry dd = new DirectoryEntry("...", last1[i1], "<Folder>", "<DIR>", entry.Date, "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                        DirectoryEntry dd = new DirectoryEntry("...", last1[i1], "<Folder>", "<DIR>", entry.Date, res.Folder, EntryType.Dir);
                         subEntries.Add(dd);
 
                         foreach (string s in Directory.GetDirectories(last1[i1]))
                         {
                             DirectoryInfo dir = new DirectoryInfo(s);
-                            DirectoryEntry d = new DirectoryEntry(dir.Name, dir.FullName, "<Folder>", "<DIR>", Directory.GetLastWriteTime(s), "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                            DirectoryEntry d = new DirectoryEntry(dir.Name, dir.FullName, "<Folder>", "<DIR>", Directory.GetLastWriteTime(s), res.Folder, EntryType.Dir);
                             d.Lastpath = entry.Fullpath;
                             subEntries.Add(d);
                         }
@@ -78,7 +89,7 @@ namespace filebrowser
                         foreach (string f in Directory.GetFiles(last1[i1]))
                         {
                             FileInfo file = new FileInfo(f);
-                            DirectoryEntry d = new DirectoryEntry(Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(), file.LastWriteTime, "C:/Users/Robert/Documents/dotnet/filebrowser/images/file.ico", EntryType.File);
+                            DirectoryEntry d = new DirectoryEntry(Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(), file.LastWriteTime, res.File, EntryType.File);
                             subEntries.Add(d);
                         }
 
@@ -92,7 +103,7 @@ namespace filebrowser
                     DirectoryEntry dd = new DirectoryEntry(
                             "...", entry.Lastpath, "", "<DIR>",
                             entry.Date,
-                            "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                            res.Folder, EntryType.Dir);
 
                     subEntries.Add(dd);
 
@@ -105,7 +116,7 @@ namespace filebrowser
                             DirectoryEntry d = new DirectoryEntry(
                                 dir.Name, dir.FullName, "", "<DIR>",
                                 Directory.GetLastWriteTime(s),
-                                "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                res.Folder, EntryType.Dir);
                             d.Lastpath = entry.Fullpath;
                             subEntries.Add(d);
 
@@ -116,7 +127,7 @@ namespace filebrowser
                             DirectoryEntry d = new DirectoryEntry(
                                 Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(),
                                 file.LastWriteTime,
-                                "C:/Users/Robert/Documents/dotnet/filebrowser/images/file.ico", EntryType.File);
+                                res.File, EntryType.File);
                             subEntries.Add(d);
                         }
                         last1[i1] = entry.Lastpath;
@@ -166,7 +177,7 @@ namespace filebrowser
 
                         foreach (string s in Directory.GetLogicalDrives())
                         {
-                            DirectoryEntry d = new DirectoryEntry(s, s, "<Driver>", "<DIR>", Directory.GetLastWriteTime(s), "C:/Users/Robert/Documents/dotnet/filebrowser/images/hdd.ico", EntryType.Dir);
+                            DirectoryEntry d = new DirectoryEntry(s, s, "<Driver>", "<DIR>", Directory.GetLastWriteTime(s), res.Hdd, EntryType.Dir);
                             subEntries2.Add(d);
                         }
                     }
@@ -174,13 +185,13 @@ namespace filebrowser
                     {
                         subEntries2.Clear();
 
-                        DirectoryEntry dd = new DirectoryEntry("...", last2[i2], "<Folder>", "<DIR>", entry.Date, "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                        DirectoryEntry dd = new DirectoryEntry("...", last2[i2], "<Folder>", "<DIR>", entry.Date, res.Folder, EntryType.Dir);
                         subEntries2.Add(dd);
 
                         foreach (string s in Directory.GetDirectories(last2[i2]))
                         {
                             DirectoryInfo dir = new DirectoryInfo(s);
-                            DirectoryEntry d = new DirectoryEntry(dir.Name, dir.FullName, "<Folder>", "<DIR>", Directory.GetLastWriteTime(s), "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                            DirectoryEntry d = new DirectoryEntry(dir.Name, dir.FullName, "<Folder>", "<DIR>", Directory.GetLastWriteTime(s), res.Folder, EntryType.Dir);
                             d.Lastpath = entry.Fullpath;
                             subEntries2.Add(d);
                         }
@@ -188,7 +199,7 @@ namespace filebrowser
                         foreach (string f in Directory.GetFiles(last2[i2]))
                         {
                             FileInfo file = new FileInfo(f);
-                            DirectoryEntry d = new DirectoryEntry(Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(), file.LastWriteTime, "C:/Users/Robert/Documents/dotnet/filebrowser/images/file.ico", EntryType.File);
+                            DirectoryEntry d = new DirectoryEntry(Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(), file.LastWriteTime, res.File, EntryType.File);
                             subEntries2.Add(d);
                         }
 
@@ -202,7 +213,7 @@ namespace filebrowser
                     DirectoryEntry dd = new DirectoryEntry(
                             "...", entry.Lastpath, "", "<DIR>",
                             entry.Date,
-                            "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                            res.Folder, EntryType.Dir);
 
                     subEntries2.Add(dd);
 
@@ -215,7 +226,7 @@ namespace filebrowser
                             DirectoryEntry d = new DirectoryEntry(
                                 dir.Name, dir.FullName, "", "<DIR>",
                                 Directory.GetLastWriteTime(s),
-                                "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                res.Folder, EntryType.Dir);
                             d.Lastpath = entry.Fullpath;
                             subEntries2.Add(d);
 
@@ -226,7 +237,7 @@ namespace filebrowser
                             DirectoryEntry d = new DirectoryEntry(
                                 Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(),
                                 file.LastWriteTime,
-                                "C:/Users/Robert/Documents/dotnet/filebrowser/images/file.ico", EntryType.File);
+                                res.File, EntryType.File);
                             subEntries2.Add(d);
                         }
                         last2[i2] = entry.Lastpath;
@@ -412,7 +423,7 @@ namespace filebrowser
                          DirectoryEntry dd = new DirectoryEntry(
                                  "...", last1[i1], "", "<DIR>",
                                  new DateTime(),
-                                 "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                 res.Folder, EntryType.Dir);
 
                          subEntries.Add(dd);
 
@@ -425,7 +436,7 @@ namespace filebrowser
                                  DirectoryEntry d = new DirectoryEntry(
                                      dir.Name, dir.FullName, "", "<DIR>",
                                      Directory.GetLastWriteTime(s),
-                                     "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                     res.Folder, EntryType.Dir);
                         
                                  subEntries.Add(d);
 
@@ -436,7 +447,7 @@ namespace filebrowser
                                  DirectoryEntry d = new DirectoryEntry(
                                      Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(),
                                      file.LastWriteTime,
-                                     "C:/Users/Robert/Documents/dotnet/filebrowser/images/file.ico", EntryType.File);
+                                     res.File, EntryType.File);
                                  subEntries.Add(d);
                              }
                          }
@@ -457,7 +468,7 @@ namespace filebrowser
                          DirectoryEntry dd = new DirectoryEntry(
                                  "...", last2[i2], "", "<DIR>",
                                  new DateTime(),
-                                 "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                 res.Folder, EntryType.Dir);
 
                          subEntries2.Add(dd);
 
@@ -470,7 +481,7 @@ namespace filebrowser
                                  DirectoryEntry d = new DirectoryEntry(
                                      dir.Name, dir.FullName, "", "<DIR>",
                                      Directory.GetLastWriteTime(s),
-                                     "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                     res.Folder, EntryType.Dir);
 
                                  subEntries2.Add(d);
 
@@ -481,7 +492,7 @@ namespace filebrowser
                                  DirectoryEntry d = new DirectoryEntry(
                                      Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(),
                                      file.LastWriteTime,
-                                     "C:/Users/Robert/Documents/dotnet/filebrowser/images/file.ico", EntryType.File);
+                                     res.File, EntryType.File);
                                  subEntries2.Add(d);
                              }
                          }
@@ -520,7 +531,7 @@ namespace filebrowser
                          DirectoryEntry dd = new DirectoryEntry(
                                  "...", last1[i1-1], "", "<DIR>",
                                  new DateTime(),
-                                 "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                 res.Folder, EntryType.Dir);
 
                          subEntries.Add(dd);
 
@@ -533,7 +544,7 @@ namespace filebrowser
                                  DirectoryEntry d = new DirectoryEntry(
                                      dir.Name, dir.FullName, "", "<DIR>",
                                      Directory.GetLastWriteTime(s),
-                                     "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                     res.Folder, EntryType.Dir);
 
                                  subEntries.Add(d);
 
@@ -544,7 +555,7 @@ namespace filebrowser
                                  DirectoryEntry d = new DirectoryEntry(
                                      Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(),
                                      file.LastWriteTime,
-                                     "C:/Users/Robert/Documents/dotnet/filebrowser/images/file.ico", EntryType.File);
+                                     res.File, EntryType.File);
                                  subEntries.Add(d);
                              }
                          }
@@ -566,7 +577,7 @@ namespace filebrowser
                          DirectoryEntry dd = new DirectoryEntry(
                                  "...", last2[i2-1], "", "<DIR>",
                                  new DateTime(),
-                                 "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                 res.Folder, EntryType.Dir);
 
                          subEntries2.Add(dd);
 
@@ -579,7 +590,7 @@ namespace filebrowser
                                  DirectoryEntry d = new DirectoryEntry(
                                      dir.Name, dir.FullName, "", "<DIR>",
                                      Directory.GetLastWriteTime(s),
-                                     "C:/Users/Robert/Documents/dotnet/filebrowser/images/folder.ico", EntryType.Dir);
+                                     res.Folder, EntryType.Dir);
 
                                  subEntries2.Add(d);
 
@@ -590,7 +601,7 @@ namespace filebrowser
                                  DirectoryEntry d = new DirectoryEntry(
                                      Path.GetFileNameWithoutExtension(file.Name), file.FullName, file.Extension, file.Length.ToString(),
                                      file.LastWriteTime,
-                                     "C:/Users/Robert/Documents/dotnet/filebrowser/images/file.ico", EntryType.File);
+                                     res.File, EntryType.File);
                                  subEntries2.Add(d);
                              }
                          }
@@ -613,82 +624,5 @@ namespace filebrowser
              }
 
         
-    }
-
-    public enum EntryType
-    {
-        Dir,
-        File
-    }
-
-    public class DirectoryEntry
-    {
-        private string _name;
-        private string _fullpath;
-        private string _lastpath;
-        private string _ext;
-        private string _size;
-        private DateTime _date;
-        private string _imagepath;
-        private EntryType _type;
-
-        public DirectoryEntry(string name,string fullname, string ext, string size, DateTime date, string imagepath, EntryType type)
-        {
-            _name = name;
-            _fullpath = fullname;
-            _ext = ext;
-            _size = size;
-            _date = date;
-            _imagepath = imagepath;
-            _type = type;
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-        
-        public string Ext
-        {
-            get { return _ext; }
-            set { _ext = value; }
-        }
-
-        public string Size
-        {
-            get { return _size; }
-            set { _size = value; }
-        }
-        
-        public DateTime Date
-        {
-            get { return _date; }
-            set { _date = value; }
-        }
-        
-        public string Imagepath
-        {
-            get { return _imagepath; }
-            set { _imagepath = value; }
-        }
-
-        public EntryType Type
-        {
-            get { return _type; }
-            set { _type = value; }
-        }
-
-        public string Fullpath
-        {
-            get { return _fullpath; }
-            set { _fullpath = value; }
-        }
-
-        public string Lastpath
-        {
-            get { return _lastpath; }
-            set { _lastpath = value; }
-        }
     }
 }

@@ -63,3 +63,16 @@ C:\Users\Robert\Desktop\filebrowser\filebrowser\obj\Debug\filebrowser_MarkupComp
 C:\Users\Robert\Desktop\filebrowser\filebrowser\obj\Debug\filebrowser.g.resources
 C:\Users\Robert\Desktop\filebrowser\filebrowser\obj\Debug\filebrowser.Properties.Resources.resources
 C:\Users\Robert\Desktop\filebrowser\filebrowser\obj\Debug\filebrowser.csproj.GenerateResource.Cache
+D:\git\forks\filebrowser\filebrowser\bin\Debug\filebrowser.exe.config
+D:\git\forks\filebrowser\filebrowser\bin\Debug\filebrowser.exe
+D:\git\forks\filebrowser\filebrowser\bin\Debug\filebrowser.pdb
+D:\git\forks\filebrowser\filebrowser\obj\Debug\filebrowser.csprojAssemblyReference.cache
+D:\git\forks\filebrowser\filebrowser\obj\Debug\MainWindow.baml
+D:\git\forks\filebrowser\filebrowser\obj\Debug\MainWindow.g.cs
+D:\git\forks\filebrowser\filebrowser\obj\Debug\App.g.cs
+D:\git\forks\filebrowser\filebrowser\obj\Debug\filebrowser_MarkupCompile.cache
+D:\git\forks\filebrowser\filebrowser\obj\Debug\filebrowser.g.resources
+D:\git\forks\filebrowser\filebrowser\obj\Debug\filebrowser.Properties.Resources.resources
+D:\git\forks\filebrowser\filebrowser\obj\Debug\filebrowser.csproj.GenerateResource.cache
+D:\git\forks\filebrowser\filebrowser\obj\Debug\filebrowser.exe
+D:\git\forks\filebrowser\filebrowser\obj\Debug\filebrowser.pdb
